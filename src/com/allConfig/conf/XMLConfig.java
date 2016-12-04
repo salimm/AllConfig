@@ -11,6 +11,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.allConfig.errors.UnkownValueFormatException;
+
 public class XMLConfig extends AbstractConfig {
 	/**
 	 * Hashmap including all key value pairs of properties in XML config file
@@ -41,8 +43,10 @@ public class XMLConfig extends AbstractConfig {
 		for (int i = 0; i < properties.getLength(); i++) {
 			// read each property
 			Node prop = properties.item(i);
-			String name = ((Element) prop).getElementsByTagName("name").item(0).getTextContent();
-			String value = ((Element) prop).getElementsByTagName("value").item(0).getTextContent();
+			String name = ((Element) prop).getElementsByTagName("name").item(0)
+					.getTextContent();
+			String value = ((Element) prop).getElementsByTagName("value")
+					.item(0).getTextContent();
 
 			// inserting into hash map
 			getMap().put(name, value);
@@ -112,6 +116,28 @@ public class XMLConfig extends AbstractConfig {
 			return def;
 		}
 		return val;
+	}
+
+	@Override
+	public boolean getBoolean(String key, boolean def)
+			throws UnkownValueFormatException {
+		boolean val = false;
+		try {
+			val = getBoolean(key);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return def;
+		}
+		return val;
+	}
+
+	@Override
+	public boolean getBoolean(String key) throws UnkownValueFormatException {
+		if (key.equalsIgnoreCase("true") || key.equalsIgnoreCase("false")) {
+			return Boolean.valueOf(getValue(key));
+		} else {
+			throw new UnkownValueFormatException();
+		}
 	}
 
 }
