@@ -119,8 +119,7 @@ public class XMLConfig extends AbstractConfig {
 	}
 
 	@Override
-	public boolean getBoolean(String key, boolean def)
-			throws UnkownValueFormatException {
+	public boolean getBoolean(String key, boolean def) {
 		boolean val = false;
 		try {
 			val = getBoolean(key);

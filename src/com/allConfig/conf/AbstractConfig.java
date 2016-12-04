@@ -99,7 +99,7 @@ public abstract class AbstractConfig {
 	 * @param def
 	 * @return
 	 */
-	public abstract boolean getBoolean(String key, boolean def) throws UnkownValueFormatException ;
+	public abstract boolean getBoolean(String key, boolean def);
 
 	/**
 	 * Read a boolean value
