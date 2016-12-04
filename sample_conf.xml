@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+	<dbinfo>
+		<property>
+			<name>DB_TYPE</name>
+			<value>MYSQL</value>
+		</property>		
+		<property>
+			<name>DB_URL</name>
+			<value>jdbc:mysql://localhost/TEST</value>
+		</property>
+		<property>
+			<name>DB_PORT</name>
+			<value>3306</value>
+		</property>	
+		<property>
+			<name>DB_USER</name>
+			<value>TEST_USER</value>
+		</property>	
+		<property>
+			<name>DB_PASSWORD</name>
+			<value>TEST_PASS</value>
+		</property>	
+		<property>
+			<name>DB_DATABASE_NAME</name>
+			<value>TEST_NAME</value>
+		</property>
+	</dbinfo>
+</conf>	

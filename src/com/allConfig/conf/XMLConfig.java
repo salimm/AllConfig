@@ -36,21 +36,39 @@ public class XMLConfig extends AbstractConfig {
 		Document doc = dBuilder.parse(fXmlFile);
 		doc.getDocumentElement().normalize();
 
-		// reading list of property nodes
-		NodeList properties = doc.getElementsByTagName("property");
+		NodeList childNodes = doc.getChildNodes();
 
-		// iterating over them
-		for (int i = 0; i < properties.getLength(); i++) {
-			// read each property
-			Node prop = properties.item(i);
-			String name = ((Element) prop).getElementsByTagName("name").item(0)
-					.getTextContent();
-			String value = ((Element) prop).getElementsByTagName("value")
-					.item(0).getTextContent();
-
-			// inserting into hash map
-			getMap().put(name, value);
+		for (int n = 0; n < childNodes.getLength(); n++) {
+			Node node = childNodes.item(n);
+			processChildNodes(node, "");
 		}
+	}
+
+	private void processChildNodes(Node node, String prefix) {
+		if (!(node instanceof Element))
+			return;
+		if (node.getNodeName().toUpperCase().equals("PROPERTY")) {
+			String name = ((Element) node).getElementsByTagName("name").item(0)
+					.getTextContent();
+			String value = ((Element) node).getElementsByTagName("value")
+					.item(0).getTextContent();
+			// inserting into hash map
+			getMap().put(prefix + "." + name, value);
+		} else {
+			NodeList childNodes = node.getChildNodes();
+			for (int n = 0; n < childNodes.getLength(); n++) {
+				Node child = childNodes.item(n);
+				if (!(child instanceof Element))
+					continue;
+				String prefixTmp = "";
+				if (prefix.length() == 0)
+					prefixTmp = node.getNodeName();
+				else
+					prefixTmp = prefix + "." + node.getNodeName();
+				processChildNodes(child, prefixTmp);
+			}
+		}
+
 	}
 
 	@Override
