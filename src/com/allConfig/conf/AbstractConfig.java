@@ -108,7 +108,12 @@ public abstract class AbstractConfig {
 	 * @param def
 	 * @return
 	 */
-	public abstract boolean getBoolean(String key) throws UnkownValueFormatException ;
+	public abstract boolean getBoolean(String key)
+			throws UnkownValueFormatException;
+
+	public String prepareKey(String prefix, String key) {
+		return prefix + "." + key;
+	}
 
 	public String getAddress() {
 		return address;
