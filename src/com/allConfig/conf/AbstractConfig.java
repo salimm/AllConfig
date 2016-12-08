@@ -112,7 +112,7 @@ public abstract class AbstractConfig {
 			throws UnkownValueFormatException;
 
 	public String prepareKey(String prefix, String key) {
-		return prefix.toLowerCase() + "." + key.toUpperCase();
+		return prefix.toUpperCase() + "." + key.toUpperCase();
 	}
 
 	public String getAddress() {
