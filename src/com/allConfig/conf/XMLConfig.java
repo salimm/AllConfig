@@ -48,12 +48,10 @@ public class XMLConfig extends AbstractConfig {
 		if (!(node instanceof Element))
 			return;
 		if (node.getNodeName().toUpperCase().equals("PROPERTY")) {
-			String name = ((Element) node).getElementsByTagName("name").item(0)
-					.getTextContent();
-			String value = ((Element) node).getElementsByTagName("value")
-					.item(0).getTextContent();
+			String name = ((Element) node).getElementsByTagName("name").item(0).getTextContent();
+			String value = ((Element) node).getElementsByTagName("value").item(0).getTextContent();
 			// inserting into hash map
-			getMap().put(prefix + "." + name, value);
+			getMap().put(prepareKey(prefix, name), value);
 		} else {
 			NodeList childNodes = node.getChildNodes();
 			for (int n = 0; n < childNodes.getLength(); n++) {
@@ -64,7 +62,7 @@ public class XMLConfig extends AbstractConfig {
 				if (prefix.length() == 0)
 					prefixTmp = node.getNodeName();
 				else
-					prefixTmp = prefix + "." + node.getNodeName();
+					prefixTmp = prepareKey(prefix, node.getNodeName());
 				processChildNodes(child, prefixTmp);
 			}
 		}
