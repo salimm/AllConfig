@@ -23,6 +23,9 @@ public class XMLConfig extends AbstractConfig {
 	public XMLConfig(String address) throws Exception {
 		super(address);
 	}
+	public XMLConfig(InputStream in) throws Exception {
+		super(in);
+	}
 
 	@Override
 	protected void init(InputStream in) throws Exception {
