@@ -1,6 +1,7 @@
 package com.allConfig.conf;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -24,16 +25,15 @@ public class XMLConfig extends AbstractConfig {
 	}
 
 	@Override
-	protected void init(String address) throws Exception {
+	protected void init(InputStream in) throws Exception {
 		// reading config file into hash map here
 		// initialize hashmap
 		map = new HashMap<String, String>();
 		// read xml file into hashmap
 
-		File fXmlFile = new File(address);
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(fXmlFile);
+		Document doc = dBuilder.parse(in);
 		doc.getDocumentElement().normalize();
 
 		NodeList childNodes = doc.getChildNodes();

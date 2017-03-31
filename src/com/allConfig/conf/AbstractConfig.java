@@ -1,5 +1,10 @@
 package com.allConfig.conf;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+
 import com.allConfig.errors.UnkownValueFormatException;
 
 /**
@@ -11,14 +16,15 @@ import com.allConfig.errors.UnkownValueFormatException;
  */
 public abstract class AbstractConfig {
 
-	private String address;
-
 	public AbstractConfig(String address) throws Exception {
-		this.setAddress(address);
-		init(address);
+		init(new FileInputStream(new File(address)));
 	}
 
-	protected abstract void init(String address) throws Exception;
+	public AbstractConfig(InputStream in) throws Exception {
+		init(in);
+	}
+
+	protected abstract void init(InputStream in) throws Exception;
 
 	/**
 	 * 
@@ -108,19 +114,15 @@ public abstract class AbstractConfig {
 	 * @param def
 	 * @return
 	 */
-	public abstract boolean getBoolean(String key)
-			throws UnkownValueFormatException;
+	public abstract boolean getBoolean(String key) throws UnkownValueFormatException;
 
 	public String prepareKey(String prefix, String key) {
 		return prefix.toUpperCase() + "." + key.toUpperCase();
 	}
 
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
+	public InputStream createInputStream() {
+		String tmp = "";
+		return new ByteArrayInputStream(tmp.getBytes());
 	}
 
 }
