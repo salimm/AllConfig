@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <conf>
-	<dbinfo>
+	<test>
 		<property>
 			<name>DB_TYPE</name>
 			<value>MYSQL</value>
@@ -25,5 +25,25 @@
 			<name>DB_DATABASE_NAME</name>
 			<value>TEST_NAME</value>
 		</property>
-	</dbinfo>
+		<property>
+			<name>VAL_BOOLEAN</name>
+			<value>true</value>
+		</property>
+		<property>
+			<name>VAL_INT</name>
+			<value>1</value>
+		</property>
+		<property>
+			<name>VAL_DOUBLE</name>
+			<value>1.2</value>
+		</property>
+		<property>
+			<name>VAL_LONG</name>
+			<value>12</value>
+		</property>
+		<property>
+			<name>VAL_STRING</name>
+			<value>test-string-value</value>
+		</property>
+	</test>
 </conf>	

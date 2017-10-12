@@ -1,4 +1,4 @@
-package com.allConfig.errors;
+package me.salimm.allConfig.errors;
 
 public class UnkownValueFormatException extends Exception{
 
