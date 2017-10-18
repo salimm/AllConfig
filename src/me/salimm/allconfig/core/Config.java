@@ -1,14 +1,14 @@
-package me.salimm.allConfig;
+package me.salimm.allconfig.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.HashMap;
 
-import me.salimm.allConfig.errors.PrefixNotANestedConfigException;
-import me.salimm.allConfig.errors.UnkownValueFormatException;
-import me.salimm.allConfig.records.ConfigEntry;
-import me.salimm.allConfig.records.MapEntry;
-import me.salimm.allConfig.records.ValueEntry;
+import me.salimm.allconfig.core.errors.PrefixNotANestedConfigException;
+import me.salimm.allconfig.core.errors.UnkownValueFormatException;
+import me.salimm.allconfig.core.records.ConfigEntry;
+import me.salimm.allconfig.core.records.MapEntry;
+import me.salimm.allconfig.core.records.ValueEntry;
 
 /**
  * AbstractConfig includes trivial implementations of config reader. It can be
@@ -30,7 +30,7 @@ public class Config {
 	}
 
 	public Config getMap(String prefix) throws PrefixNotANestedConfigException {
-		return getMap(prefix.split("\\."), 0);
+		return getMap(prefix.trim().toLowerCase().split("\\."), 0);
 	}
 
 	protected MapEntry getMap(String[] prefix, int idx) throws PrefixNotANestedConfigException {

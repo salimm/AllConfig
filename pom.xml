@@ -21,7 +21,7 @@
 		<url>https://github.com/salimm/AllConfig</url>
 	</scm>
 
-	<build>
+	<build>	
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
 			<plugin>
@@ -45,7 +45,6 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<version>1.0.0</version>

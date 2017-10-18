@@ -1,4 +1,4 @@
-package me.salimm.allConfig;
+package me.salimm.allconfig.core;
 
 import java.util.Arrays;
 

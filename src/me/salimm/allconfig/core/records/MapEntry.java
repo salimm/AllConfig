@@ -1,8 +1,9 @@
-package me.salimm.allConfig.records;
+package me.salimm.allconfig.core.records;
 
 import java.util.HashMap;
 
-import me.salimm.allConfig.Config;
+import me.salimm.allconfig.core.Config;
+
 
 public class MapEntry extends Config implements ConfigEntry {
 

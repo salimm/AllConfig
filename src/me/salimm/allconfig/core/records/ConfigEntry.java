@@ -1,4 +1,4 @@
-package me.salimm.allConfig.records;
+package me.salimm.allconfig.core.records;
 
 public interface ConfigEntry {
 

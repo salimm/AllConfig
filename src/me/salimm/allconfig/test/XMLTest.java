@@ -1,4 +1,4 @@
-package me.salimm.allConfig.test;
+package me.salimm.allconfig.test;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,8 +6,8 @@ import java.io.FileNotFoundException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import me.salimm.allConfig.Config;
-import me.salimm.allConfig.types.XMLConfig;
+import me.salimm.allconfig.core.Config;
+import me.salimm.allconfig.core.types.XMLConfig;
 
 public class XMLTest {
 

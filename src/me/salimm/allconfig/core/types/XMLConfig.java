@@ -1,4 +1,4 @@
-package me.salimm.allConfig.types;
+package me.salimm.allconfig.core.types;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,10 +14,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import me.salimm.allConfig.Config;
-import me.salimm.allConfig.records.ConfigEntry;
-import me.salimm.allConfig.records.MapEntry;
-import me.salimm.allConfig.records.ValueEntry;
+import me.salimm.allconfig.core.Config;
+import me.salimm.allconfig.core.records.ConfigEntry;
+import me.salimm.allconfig.core.records.MapEntry;
+import me.salimm.allconfig.core.records.ValueEntry;
 
 public class XMLConfig extends Config {
 	/**

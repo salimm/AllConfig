@@ -1,4 +1,4 @@
-package me.salimm.allConfig.errors;
+package me.salimm.allconfig.core.errors;
 
 public class PrefixNotANestedConfigException extends Exception{
 
