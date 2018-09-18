@@ -1,9 +1,11 @@
-package me.salimm.allconfig.test;
+package test.me.salimm.allconfig;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import me.salimm.allconfig.core.Config;
@@ -14,38 +16,36 @@ public class XMLTest {
 	@Test
 	public void parseFile() throws Exception {
 		Config conf = new XMLConfig("samples/sample_conf.xml");
+		assertNotNull(conf);
 	}
 
 	@Test
 	public void parseInputStreamXML() throws Exception {
 		Config conf = new XMLConfig(new FileInputStream("samples/sample_conf.xml"));
+		assertNotNull(conf);
 	}
 
 	@Test
 	public void getValueTest() throws FileNotFoundException, Exception {
 		Config conf = new XMLConfig(new FileInputStream("samples/sample_conf.xml"));
-		conf.getBoolean("CONF.TEST.VAL_BOOLEAN");
-		conf.getValue("CONF.TEST.VAL_STRING");
-		conf.getInteger("CONF.TEST.VAL_INT");
-		conf.getDouble("conf.test.VAL_DOUBLE");
-		conf.getLong("conf.test.VAL_LONG");
+		assertEquals(conf.getBoolean("conf.test.args.useSSL"), false);
+		assertEquals(conf.getInteger("conf.test.TEST.X"), 1);
+		assertEquals(conf.getInteger("conf.test.TEST.x"), 2);
+		assertEquals(conf.getString("conf.test.DB_USER"), "TEST_USER");
 	}
 
 	@Test
 	public void getValueTestDefault() throws FileNotFoundException, Exception {
 		Config conf = new XMLConfig(new FileInputStream("samples/sample_conf.xml"));
-		Assert.assertEquals(conf.getBoolean("CONF.TEST.X", false), false);
-		Assert.assertEquals(conf.getValue("CONF.TEST.X", "test"), "test");
-		Assert.assertEquals(conf.getInteger("CONF.TEST.X", 1), 1);
-		Assert.assertEquals(conf.getDouble("conf.test.X", 1.2), ((double) 1.2), 0.0000001);
-		Assert.assertEquals(conf.getLong("conf.test.X", 2), (long) 2);
+		assertEquals(conf.getBoolean("conf.test.args.useSSL",true), false);
+		assertEquals(conf.getBoolean("conf.test.args.NOT_FOUND",true), true);
+		assertEquals(conf.getInteger("conf.test.TEST.X",1), 1);
+		assertEquals(conf.getInteger("conf.test.TEST.Y",3), 3);
 	}
-	
+
 	@Test
 	public void getMapTest() throws FileNotFoundException, Exception {
 		Config conf = new XMLConfig(new FileInputStream("samples/sample_conf.xml"));
-		
-		Assert.assertEquals(1,conf.getMap("conf").size());
-		Assert.assertEquals(11,conf.getMap("conf.test").size());
+		assertEquals(conf.getBoolean("conf.test.args.useSSL",true), false);
 	}
 }

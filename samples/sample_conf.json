@@ -1,0 +1,20 @@
+{
+	"conf":{
+		"test":{
+			"DB_TYPE": "MYSQL",	
+			"DB_URL": "jdbc:mysql://localhost/TEST",	
+			"DB_PORT":3306,	
+			"DB_USER":"TEST_USER",	
+			"DB_PASSWORD":"TEST_PASS",	
+			"DB_DATABASE_NAME":"TEST_NAME",	
+			"args":{
+				"useSSL": false,	
+				"timezone": "EST"
+			},
+			"TEST":{
+				"X":1,	
+				"x":2
+			}
+		}
+	}
+}

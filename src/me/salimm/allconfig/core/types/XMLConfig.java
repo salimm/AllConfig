@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,7 +15,6 @@ import org.w3c.dom.NodeList;
 
 import me.salimm.allconfig.core.Config;
 import me.salimm.allconfig.core.records.ConfigEntry;
-import me.salimm.allconfig.core.records.MapEntry;
 import me.salimm.allconfig.core.records.ValueEntry;
 
 public class XMLConfig extends Config {
@@ -33,56 +31,50 @@ public class XMLConfig extends Config {
 	public XMLConfig(InputStream in) throws Exception {
 		init(in);
 	}
+	
 
 	protected void init(InputStream in) throws Exception {
-		// reading config file into hash map here
-		// initialize hashmap
-		// read xml file into hashmap
-
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(in);
 		doc.getDocumentElement().normalize();
+		ConfigEntry root = processNode(doc.getFirstChild());
+		this.map.put(root.getName(), root);
 
-		this.map = processNode(doc);
-
-		// NodeList childNodes = doc.getChildNodes();
-		//
-		// for (int n = 0; n < childNodes.getLength(); n++) {
-		// Node node = childNodes.item(n);
-		// processChildNodes(node);
-		// }
 	}
 
-	private HashMap<String, ConfigEntry> processNode(Node node) {
-		if (!(node instanceof Element) && !(node instanceof Document))
+	private ConfigEntry processNode(Node node) {
+		if(!((node instanceof Element) || (node instanceof Document)))
 			return null;
-		
-		
 
-		HashMap<String, ConfigEntry> map = new HashMap<String, ConfigEntry>();
+		String nodeName = node.getNodeName().trim();
 
-		NodeList childNodes = node.getChildNodes();
-		for (int n = 0; n < childNodes.getLength(); n++) {
-			Node childNode = childNodes.item(n);
+		if ( hasChildren(node)) {
+			Config conf = new Config(nodeName);
 
-			String nodeName = childNode.getNodeName().trim().toLowerCase();
-
-			if (!(childNode instanceof Element)) {
-				continue;
-			} else if (nodeName.equals("property")) {
-				String name = ((Element) childNode).getElementsByTagName("name").item(0).getTextContent().trim()
-						.toLowerCase();
-				String value = ((Element) childNode).getElementsByTagName("value").item(0).getTextContent();
-				// inserting into hash map
-				map.put(name, new ValueEntry(value));
-			} else {
-				map.put(nodeName, new MapEntry(processNode(childNode)));
+			NodeList childNodes = node.getChildNodes();
+			for (int n = 0; n < childNodes.getLength(); n++) {
+				Node childNode = childNodes.item(n);
+				ConfigEntry childEntry = processNode(childNode);
+				if(childEntry==null) {
+					continue;
+				}
+				conf.add(childEntry);
 			}
+
+			return conf;
+		} else {
+			return new ValueEntry(nodeName, node.getTextContent());
 		}
 
-		return map;
+	}
 
+	private boolean hasChildren(Node node) {
+		boolean hasChild = false;
+		for (int i = 0; i < node.getChildNodes().getLength(); i++) {
+			hasChild |= ((node.getChildNodes().item(i) instanceof Element) || (node.getChildNodes().item(i) instanceof Document));
+		}
+		return  hasChild;
 	}
 
 }

@@ -1,49 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <conf>
 	<test>
-		<property>
-			<name>DB_TYPE</name>
-			<value>MYSQL</value>
-		</property>		
-		<property>
-			<name>DB_URL</name>
-			<value>jdbc:mysql://localhost/TEST</value>
-		</property>
-		<property>
-			<name>DB_PORT</name>
-			<value>3306</value>
-		</property>	
-		<property>
-			<name>DB_USER</name>
-			<value>TEST_USER</value>
-		</property>	
-		<property>
-			<name>DB_PASSWORD</name>
-			<value>TEST_PASS</value>
-		</property>	
-		<property>
-			<name>DB_DATABASE_NAME</name>
-			<value>TEST_NAME</value>
-		</property>
-		<property>
-			<name>VAL_BOOLEAN</name>
-			<value>true</value>
-		</property>
-		<property>
-			<name>VAL_INT</name>
-			<value>1</value>
-		</property>
-		<property>
-			<name>VAL_DOUBLE</name>
-			<value>1.2</value>
-		</property>
-		<property>
-			<name>VAL_LONG</name>
-			<value>12</value>
-		</property>
-		<property>
-			<name>VAL_STRING</name>
-			<value>test-string-value</value>
-		</property>
+		<DB_TYPE>MYSQL</DB_TYPE>
+		<DB_URL>jdbc:mysql://localhost/TEST</DB_URL>
+		<DB_PORT>3306</DB_PORT>
+		<DB_USER>TEST_USER</DB_USER>
+		<DB_PASSWORD>TEST_PASS</DB_PASSWORD>
+		<DB_DATABASE_NAME>TEST_NAME</DB_DATABASE_NAME>	
+		<args>
+			<useSSL>false</useSSL>
+			<timezone>EST</timezone>
+		</args>
+		<TEST>
+			<X>1</X>
+			<x>2</x>
+		</TEST>
 	</test>
 </conf>	

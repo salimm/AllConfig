@@ -2,12 +2,12 @@ package me.salimm.allconfig.core;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
 
 import me.salimm.allconfig.core.errors.PrefixNotANestedConfigException;
 import me.salimm.allconfig.core.errors.UnkownValueFormatException;
 import me.salimm.allconfig.core.records.ConfigEntry;
-import me.salimm.allconfig.core.records.MapEntry;
 import me.salimm.allconfig.core.records.ValueEntry;
 
 /**
@@ -17,71 +17,78 @@ import me.salimm.allconfig.core.records.ValueEntry;
  * @author salimm
  *
  */
-public class Config {
+public class Config implements ConfigEntry {
 
 	protected HashMap<String, ConfigEntry> map;
+	private String name;
 
-	public Config(HashMap<String, ConfigEntry> map) {
+	public Config(String name, HashMap<String, ConfigEntry> map) {
+		this.name = name;
 		this.map = map;
 	}
 
+	public Config(String name) {
+		this(name, new HashMap<String, ConfigEntry>());
+	}
+
 	public Config() {
-		this.map = new HashMap<String, ConfigEntry>();
+		this(null, new HashMap<String, ConfigEntry>());
 	}
 
-	public Config getMap(String prefix) throws PrefixNotANestedConfigException {
-		return getMap(prefix.trim().toLowerCase().split("\\."), 0);
+	public ConfigEntry get(String path) throws PrefixNotANestedConfigException {
+		return get(path.trim().split("\\."));
 	}
 
-	protected MapEntry getMap(String[] prefix, int idx) throws PrefixNotANestedConfigException {
-		if (prefix == null)
-			return new MapEntry(this.map);
+	public ConfigEntry get(String[] path) throws PrefixNotANestedConfigException {
+		return get(path, 0);
+	}
 
-		ConfigEntry entry = map.get(prefix[idx]);
-		if (idx == prefix.length - 1) {
-			if (entry instanceof MapEntry) {
-				return ((MapEntry) entry);
-			} else {
-				throw new PrefixNotANestedConfigException();
-			}
+	protected ConfigEntry get(String[] path, int idx) throws PrefixNotANestedConfigException {
+		ConfigEntry entry = map.get(path[idx]);
+
+		if (entry == null) {
+			throw new PrefixNotANestedConfigException();
+		}
+
+		if (idx == path.length - 1) {
+			return entry;
 		} else {
-			if (entry instanceof MapEntry) {
-				return ((MapEntry) entry).getMap(prefix, idx + 1);
+			if (entry instanceof Config) {
+				return ((Config) entry).get(path, idx + 1);
 			} else {
 				throw new PrefixNotANestedConfigException();
 			}
 		}
 	}
-
-	public Config getMap(ConfigKey key) throws PrefixNotANestedConfigException {
-		return getMap(key.getPrefix(), 0);
+	
+	public void add(ConfigEntry entry) {
+		this.map.put(entry.getName(), entry);
 	}
 
-	public String getValue(String keyStr) throws PrefixNotANestedConfigException {
-		ConfigKey key = ConfigKey.splitKey(keyStr.toLowerCase());
-		if (key.getPrefix() != null) {
-			Config conf = getMap(key);
-			return conf.getValue(key.getValKey());
-		} else {
-			return ((ValueEntry) map.get(key.getValKey())).getValue();
-		}
+	public Config getConfig(String path) throws PrefixNotANestedConfigException {
+		return (Config) get(path.trim().split("\\."), 0);
+	}
+
+	public String getString(String keyStr) throws PrefixNotANestedConfigException {
+		ValueEntry entry = (ValueEntry) get(keyStr);
+		return entry.getValue();
 	}
 
 	public int getInteger(String key) throws NumberFormatException, PrefixNotANestedConfigException {
-		return Integer.parseInt(getValue(key));
+		return Integer.parseInt(getString(key));
 	}
 
 	public double getDouble(String key) throws NumberFormatException, PrefixNotANestedConfigException {
-		return Double.parseDouble(getValue(key));
+		return Double.parseDouble(getString(key));
 	}
 
 	public long getLong(String key) throws NumberFormatException, PrefixNotANestedConfigException {
-		return Long.parseLong(getValue(key));
+		return Long.parseLong(getString(key));
 	}
 
-	public String getValue(String key, String def) throws PrefixNotANestedConfigException {
+	public String getString(String key, String def) throws PrefixNotANestedConfigException {
 		try {
-			String val = getValue(key);
+			String val = getString(key);
 			if (val == null)
 				return def;
 
@@ -132,7 +139,7 @@ public class Config {
 	}
 
 	public boolean getBoolean(String key) throws UnkownValueFormatException, PrefixNotANestedConfigException {
-		String val = getValue(key);
+		String val = getString(key);
 		if (val != null && (val.equalsIgnoreCase("true") || val.equalsIgnoreCase("false"))) {
 			return Boolean.valueOf(val);
 		} else {
@@ -154,8 +161,23 @@ public class Config {
 		return new ByteArrayInputStream(tmp.getBytes());
 	}
 
-	public int size(){
+	public int size() {
 		return map.size();
 	}
-	
+
+	public Collection<ConfigEntry> children() {
+		return map.values();
+	}
+
+	public Collection<String> childNames() {
+		return map.keySet();
+	}
+
+	/**
+	 * This is null it is the root Config
+	 */
+	public String getName() {
+		return name;
+	}
+
 }

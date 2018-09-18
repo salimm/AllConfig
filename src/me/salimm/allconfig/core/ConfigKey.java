@@ -1,40 +1,8 @@
 package me.salimm.allconfig.core;
 
-import java.util.Arrays;
-
-
 public class ConfigKey {
 
-	/**
-	 * contains the the prefix to the nested map
-	 */
-	private String[] prefix;
-
-	/**
-	 * final key to the value in nested map
-	 */
-	private String valKey;
-
-	public ConfigKey(String[] prefix, String valKey) {
-		this.prefix = prefix;
-		this.valKey = valKey;
-	}
-
-	public String getValKey() {
-		return valKey;
-	}
-
-	public void setValKey(String valKey) {
-		this.valKey = valKey;
-	}
-
-	public String[] getPrefix() {
-		return prefix;
-	}
-
-	public void setPrefix(String[] prefix) {
-		this.prefix = prefix;
-	}
+	public static final String PATH_SEPARATOR = "\\.";
 
 	/**
 	 * creates a config key instance out of the full key string
@@ -42,20 +10,10 @@ public class ConfigKey {
 	 * @param key
 	 * @return
 	 */
-	public static ConfigKey splitKey(String key) {
-		String[] parts = key.split("\\.");
+	public static String[] splitKey(String key) {
+		String[] parts = key.split(PATH_SEPARATOR);
 
-		String[] prefix = null;
-		String valKey = null;
-
-		if (parts.length == 1) {
-			valKey = key;
-		} else {
-			prefix = Arrays.copyOf(parts, parts.length - 1);
-			valKey = parts[parts.length - 1];
-		}
-
-		return new ConfigKey(prefix, valKey);
+		return parts;
 	}
 
 }
