@@ -47,7 +47,7 @@ public class Config implements ConfigEntry {
 		ConfigEntry entry = map.get(path[idx]);
 
 		if (entry == null) {
-			throw new PrefixNotANestedConfigException();
+			throw new PrefixNotANestedConfigException(path);
 		}
 
 		if (idx == path.length - 1) {
@@ -56,7 +56,7 @@ public class Config implements ConfigEntry {
 			if (entry instanceof Config) {
 				return ((Config) entry).get(path, idx + 1);
 			} else {
-				throw new PrefixNotANestedConfigException();
+				throw new PrefixNotANestedConfigException(path);
 			}
 		}
 	}
