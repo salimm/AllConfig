@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.salimm</groupId>
 	<artifactId>allconfig</artifactId>
+	<version>1.1.1</version>
 
 	<name>AllConfig</name>
 	<description>A config library that allows multiple level configuration files parsed from different file versions</description>
@@ -72,5 +73,5 @@
 			<version>4.12</version>
 		</dependency>
 	</dependencies>
-	<version>1.1.0</version>
+	
 </project>
