@@ -12,8 +12,11 @@ public class ConfigKey {
 	 */
 	public static String[] splitKey(String key) {
 		String[] parts = key.split(PATH_SEPARATOR);
-
 		return parts;
+	}
+	
+	public static String prepareKey(String prefix, String key) {
+		return prefix + "." + key;
 	}
 
 }

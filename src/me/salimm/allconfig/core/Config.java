@@ -152,9 +152,7 @@ public class Config implements ConfigEntry {
 		return map.toString();
 	}
 
-	public String prepareKey(String prefix, String key) {
-		return prefix.toLowerCase() + "." + key.toLowerCase();
-	}
+	
 
 	public InputStream createInputStream() {
 		String tmp = "";
